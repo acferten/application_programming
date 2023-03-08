@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import UserSerializer
 
 
-class AccountView(generics.RetrieveAPIView):
+class AccountView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
