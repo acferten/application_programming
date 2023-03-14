@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from account.models import AdvUser
 from location.models import Location
 
 
@@ -38,7 +39,7 @@ class Animal(models.Model):
         null=False,
         help_text='Жизненный статус')
 
-    chipper = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    chipper = models.ForeignKey(AdvUser, on_delete=models.CASCADE, null=False)
     chippingLocation = models.ForeignKey(Location, on_delete=models.CASCADE, null=False,
                                          related_name='chipping_location')
     animalTypes = models.ForeignKey(Type, on_delete=models.CASCADE, null=False)
