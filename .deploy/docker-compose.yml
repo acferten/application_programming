@@ -2,30 +2,32 @@ version: '3.9'
 
 services:
   # Сервис для разворачивания контейнера с базой данных
-#  db:
-#    image: postgres
-#    volumes:
-#      - ./data/db:/var/lib/postgresql/data
-#    environment:
-#      - POSTGRES_DB=postgres
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=postgres
+  #  db:
+  #    image: postgres
+  #    volumes:
+  #      - ./data/db:/var/lib/postgresql/data
+  #    environment:
+  #      - POSTGRES_DB=postgres
+  #      - POSTGRES_USER=postgres
+  #      - POSTGRES_PASSWORD=postgres
 
 
   # Сервис для разворачивания контейнера с приложением
   webapi:
-    build: .
-#    command: python manage.py runserver 0.0.0.0:8000
+    build:
+      context: ..
+      dockerfile: .deploy/Dockerfile
+    command: python /usr/src/app/manage.py runserver 0.0.0.0:80
     volumes:
       - ../:/app
     ports:
-      - "8000:8000"
-#    environment:
-#      - POSTGRES_NAME=postgres
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=postgres
-#    depends_on:
-#      - db
+      - "80:80"
+  #    environment:
+  #      - POSTGRES_NAME=postgres
+  #      - POSTGRES_USER=postgres
+  #      - POSTGRES_PASSWORD=postgres
+  #    depends_on:
+  #      - db
 
   # Сервис для разворачивания контейнера с автотестами
   tests:
@@ -36,7 +38,7 @@ services:
     depends_on:
       - webapi
     environment:
-      SERVER_URL: http://localhost:8000
+      SERVER_URL: http://localhost:80
       STAGE: 0
       # all - запуск всех тестов из трёх доступных этапов
       # 0, 1 или 2 - запуск тестов для соответствующего этапа

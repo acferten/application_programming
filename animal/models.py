@@ -17,9 +17,9 @@ class Animal(models.Model):
     height = models.FloatField()
 
     GENDER_TYPES = (
-        ('m', 'Male'),
-        ('f', 'Female'),
-        ('o', 'Other'),)
+        ('m', 'MALE'),
+        ('f', 'FEMALE'),
+        ('o', 'OTHER'),)
 
     gender = models.CharField(
         max_length=1,
