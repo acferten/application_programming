@@ -6,12 +6,12 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 from .models import AdvUser
-from .serializers import UserSerializer, CreateAccountSerializer
+from .serializers import AccountSerializer, CreateAccountSerializer
 
 
 class AccountView(generics.RetrieveUpdateDestroyAPIView):
     queryset = AdvUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = AccountSerializer
 
     def get(self, request, *args, **kwargs):
         if int(self.kwargs['pk']) <= 0:
@@ -38,3 +38,9 @@ class CreateAccountView(generics.CreateAPIView):
 
         return Response({"message": 'User created', "status:": status.HTTP_201_CREATED},
                         status=status.HTTP_201_CREATED, headers=headers)
+
+
+class SearchAccountView(generics.ListAPIView):
+    queryset = AdvUser.objects.all()
+    serializer_class = AccountSerializer
+    filterset_fields = ['id', 'first_name', 'last_name', 'email']

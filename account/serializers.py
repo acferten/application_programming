@@ -4,7 +4,7 @@ from rest_framework import serializers
 from account.models import AdvUser
 
 
-class UserSerializer(serializers.ModelSerializer):
+class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = AdvUser
         fields = ['id', 'first_name', 'last_name', 'email']
