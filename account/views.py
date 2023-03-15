@@ -5,6 +5,7 @@ from django.core.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
+from .filters import AccountFilter
 from .models import AdvUser
 from .serializers import AccountSerializer, CreateAccountSerializer
 
@@ -40,14 +41,10 @@ class CreateAccountView(generics.CreateAPIView):
                         status=status.HTTP_201_CREATED, headers=headers)
 
 
-def account_filter(request):
-    f = AccountFilter(request.GET, queryset=AdvUser.objects.all()[request.GET['from']:request.GET['size']])
-    return Response({'filter': f})
+class SearchAccountView(generics.ListAPIView):
+    serializer_class = AccountSerializer
+    filterset_fields = ['id', 'first_name', 'last_name', 'email']
 
-# class SearchAccountView(generics.ListAPIView):
-#     serializer_class = AccountSerializer
-#     filterset_fields = ['id', 'first_name', 'last_name', 'email']
-#
-#     def get_queryset(self, **kwargs):
-#         print('*' * 100, **kwargs)
-#         return AdvUser.objects.all()[self.kwargs['from']:self.kwargs['size']]
+    def get_queryset(self, **kwargs):
+        print('*' * 100, **kwargs)
+        return AdvUser.objects.all()[self.kwargs['from']:self.kwargs['size']]
