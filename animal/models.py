@@ -42,7 +42,7 @@ class Animal(models.Model):
     chipper = models.ForeignKey(AdvUser, on_delete=models.CASCADE, null=False)
     chippingLocation = models.ForeignKey(Location, on_delete=models.CASCADE, null=False,
                                          related_name='chipping_location')
-    animalTypes = models.ForeignKey(Type, on_delete=models.CASCADE, null=False)
+    animalTypes = models.ManyToManyField(Type)
     chippingDateTime = models.DateTimeField(auto_now=True)
     deathDateTime = models.DateTimeField(null=True, blank=False)
-    visitedLocations = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='visited_location')
+    visitedLocations = models.ManyToManyField(Location, related_name='visited_location')

@@ -1,7 +1,8 @@
 from django.urls import path
 
-from location.views import LocationDetailView
+from .views import *
 
 urlpatterns = [
-    path('<pk>', LocationDetailView.as_view(), name='detail'),
+    path('', AnimalLocationsView.as_view(), name='animal-locations'),
+    path('<pk>', LocationDetailView.as_view(), name='location-detail'),
 ]
